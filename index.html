@@ -1,0 +1,88 @@
+<head>
+  <title>AI-Powered Joke Rating System</title>
+</head>
+
+<body>
+  <!--
+    need a name for this mf
+    DICK: Dangerous, Intelligence-based Consumer of joKes  -- ehh i kinda like but i think i can do better with some thinking/time
+  -->
+
+  <!-- this will eventually be a loading gif from like loadinggifs.org or whatever -->
+  <div align="center" id="processing" style="display:none; font-size:16px;"><br><br><br>Analyzing...</div>
+  <div id="output" align="center" style="display:none; font-size:24px;">
+    <!-- i should just make it reload huh -->
+    <br><br><input type="button" value="try again" onclick="document.getElementById('output').style.display='none'; document.getElementById('inputdiv').style.display='block';document.getElementById('jokeinput').focus(); document.querySelector('.fo').remove()">
+  </div>
+  <div align="center" id="inputdiv">
+    <br><br><label for="jokeinput">Put Your Joke Here</label><br><br>
+    <input id="jokeinput" type="text" placeholder="funny joke" autofocus/>
+  </div>
+
+  <!-- apparently html5 spec "oFfIcIalLY" says that style tags are supposed to go in the header but it didnt work so ig not lmao -->
+  <style>
+    body {
+      background-color:#d8bb97;
+      font-family:Arial;
+    }
+    label[for="jokeinput"] {
+      font-size:24px;
+    }
+    #jokeinput {
+      border:1px solid black;
+      border-radius:1px;
+      height:2em;
+      width:16em;
+      padding:4px;
+      font-size:14px;
+      outline:none; /* whoops i did this on accident */
+    }
+    #output {
+      font-size:36px;
+    }
+    input[type="button"] {
+      border-radius:2px;
+      cursor:pointer;
+      background:#707070;
+      border:none;
+      padding:4px;
+      outline:none; /* my cat walked on my keyboard and typed this, i dont know what it does but when i remove it the button looks bad */
+    }
+    input[type="button"]:hover { background:#505050; }
+  </style>
+  <script>
+    let responses = {
+      0: "worst joke ever",
+      1: "disgusting",
+      2: 'they call you the "bad luck brian" of jokes',
+      3: "not funny",
+      4: "no",
+      5: "average",
+      6: "heard that one before",
+      7: "are you high",
+      8: "i'd like some of whatever you're smoking",
+      9: "hard to top that",
+      10: 'undefined lmao'
+    }, response;
+    function id(e) { return document.getElementById(e); }
+    id("jokeinput").addEventListener("keypress", e => {
+      if(e.keyCode !== 13 || id("jokeinput").value === "") return;
+      id("jokeinput").value = ''
+      id("inputdiv").style.display = "none"
+      id('processing').style.display = "block"
+      setTimeout(() => {
+        id("processing").style.display = "none"
+        score = Math.floor(Math.random()*11) // need to make 11 because it needs to be 0-10 inclusive
+        if(score === 10) {
+          // for the authentic experience
+          document.write("504: Internal server error")
+          throw new TypeError("Response cannot be undefined")
+          return;
+        }
+        response = responses[score]
+        id("output").innerHTML = `<div class="fo"><br><br>${score}/10 <br> ${response}</div>`+id("output").innerHTML;
+        id("output").style.display = "block"
+      }, Math.floor(3000+Math.random()*5432))
+    })
+  </script>
+</body>
